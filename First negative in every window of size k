@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    vector<int> firstNegInt(vector<int>& arr, int k) {
+        // write code here
+        vector<int>ans;
+        queue<int>neg;
+        int i=0,j=0;
+        while(j<arr.size()){
+            if(arr[j]<0)neg.push(arr[j]);
+            
+            if((j-i)+1>k){
+                if(neg.size() >0 && neg.front()==arr[i])neg.pop();
+                i++;
+            }
+            if((j-i)+1==k){
+                if(!neg.empty())ans.push_back(neg.front());
+                else ans.push_back(0);
+            }
+            
+            j++;
+        }
+        
+        return ans;
+        
+    }
+};
