@@ -1,35 +1,23 @@
 class Solution {
 public:
-int findMin(vector<int>& nums) {
-        int l=0,h=nums.size()-1;
 
-        while(l<h){
-            int m=l+(h-l)/2;
-            if(nums[m]>nums[h]){
-                l=m+1;
-            }else{
-                h=m;
-            }
-        }
-
-        return l;
-    }
     int search(vector<int>& nums, int target) {
-     int l=findMin(nums);   
+     int l=0;   
      int h=nums.size()-1;
 
      while(l<=h){
         int m=l+(h-l)/2;
-        if(nums[m]==target){
-            return m;
-        }
-        else if(target>nums[h]){
-            h=l-1;
-            l=0;
-        }else if(nums[m]<target){
-            l=m+1;
-        }else{
+        if(nums[m]==target) return m;
+        if(nums[l]<=nums[m]){ //left is sorted
+           if(target>=nums[l] && target<=nums[m]) //exitsts
             h=m-1;
+        else l=m+1;
+           
+        }else{
+            if(target>=nums[m] &&  target<=nums[h]) //exitsts
+            l=m+1;
+            else h=m-1;
+           
         }
      }
      return -1;
