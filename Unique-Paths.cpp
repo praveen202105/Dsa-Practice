@@ -10,18 +10,23 @@ public:
 //         return dp[m][n]=up+left;
 //     }
     int uniquePaths(int m, int n) {
-        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
-        for(int i=1;i<=n;i++)dp[1][i]=1;
-      
+        if(m==1 || n==1) return 1;
+        // vector<vector<int>>dp(m+1,vector<int>(n+1,0));
+        // for(int i=1;i<=n;i++)dp[1][i]=1;
+       vector<int>prev(n+1,1);
+       vector<int>curr(n+1,0);
+       
         for(int i=2;i<=m;i++){
             for(int j=1;j<=n;j++){
-                  int up=dp[i-1][j];
-                  int left=dp[i][j-1];
+                  int up=prev[j];
+                  int left=curr[j-1];
 
-               dp[i][j]=up+left;
+               curr[j]=up+left;
             }
+            prev=curr;
+           if(i!=m) curr.resize(n+1,0);
         }
          
-        return dp[m][n];
+        return curr[n];
     }
 };
