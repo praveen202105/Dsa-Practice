@@ -12,26 +12,30 @@ public:
 
     int minPathSum(vector<vector<int>>& grid) {
         int m=grid.size(),n=grid[0].size();
-        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
-            dp[0][0]=grid[0][0];
-        
+        // vector<vector<int>>dp(m+1,vector<int>(n+1,0));
+            // dp[0][0]=grid[0][0];
+         vector<int>prev(n,0);
         for(int i=0;i<m;i++){
+            vector<int>curr(n,0);
             for(int j=0;j<n;j++){    
-                if(i==0 & j==0) continue;
-
+                if(i==0 && j==0){
+                    curr[0]=grid[0][0];
+                     continue;
+                }
                         int up=1e5;
-                        if(i)up=grid[i][j]+dp[i-1][j];
+                        if(i)up=grid[i][j]+prev[j];
                         int left=1e5;
-                        if(j)left=grid[i][j]+dp[i][j-1];
+                        if(j)left=grid[i][j]+curr[j-1];
                         // cout<<i<<" "<<j<<" "<<up<<"+"<<left<<endl;
-                       dp[i][j]=min(up,left);
+                       curr[j]=min(up,left);
                 
 
 
             }
+            prev=curr;
         }
         
-        return dp[m-1][n-1];
+        return prev[n-1];
    
     
     }
